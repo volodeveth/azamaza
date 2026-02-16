@@ -3,8 +3,38 @@
 import { useState, useRef } from "react";
 import { serviceTypes } from "@/data/categories";
 import { useClickOutside } from "@/hooks/useClickOutside";
-import { ChevronDownIcon } from "@/components/ui/Icons";
-import ImageOverlay from "@/components/ui/ImageOverlay";
+import { SearchIcon } from "@/components/ui/Icons";
+import {
+  BsSuitcaseLg,
+  BsCamera,
+  BsPeople,
+  BsPhone,
+  BsFuelPump,
+  BsTaxiFront,
+  BsCupHot,
+  BsBusFront,
+  BsBuilding,
+  BsShopWindow,
+  BsTags,
+  BsRepeat,
+  BsDatabase,
+} from "react-icons/bs";
+
+const serviceTypeIcons: Record<string, React.ComponentType<{ size?: number; color?: string }>> = {
+  Excursion: BsSuitcaseLg,
+  Photography: BsCamera,
+  Meet: BsPeople,
+  "App Subscription": BsPhone,
+  Fueling: BsFuelPump,
+  Taxi: BsTaxiFront,
+  Restaurants: BsCupHot,
+  Transfer: BsBusFront,
+  Hotels: BsBuilding,
+  Marketplaces: BsShopWindow,
+  Coupon: BsTags,
+  Rent: BsRepeat,
+  "Referral program": BsDatabase,
+};
 
 interface ServiceTypeDropdownProps {
   value: string;
@@ -14,7 +44,6 @@ interface ServiceTypeDropdownProps {
 
 export default function ServiceTypeDropdown({ value, onChange, error }: ServiceTypeDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useClickOutside(dropdownRef, () => setIsOpen(false), isOpen);
@@ -42,55 +71,64 @@ export default function ServiceTypeDropdown({ value, onChange, error }: ServiceT
   };
 
   return (
-    <>
-      <div ref={dropdownRef} className="relative">
-        <button
-          type="button"
-          onClick={() => setIsOpen((prev) => !prev)}
-          onKeyDown={handleKeyDown}
-          className={`flex h-[42px] w-full items-center gap-1 rounded-lg bg-input-bg px-1 text-left ${
-            error ? "ring-2 ring-red-400" : ""
-          }`}
-          aria-haspopup="listbox"
-          aria-expanded={isOpen}
-          aria-label="Service type"
-          aria-invalid={!!error}
+    <div ref={dropdownRef} className="relative">
+      <button
+        type="button"
+        onClick={() => setIsOpen((prev) => !prev)}
+        onKeyDown={handleKeyDown}
+        className={`flex w-full items-center text-left ${error ? "ring-2 ring-red-400" : ""}`}
+        style={{
+          height: "42px",
+          backgroundColor: "#F8FAFC",
+          borderRadius: "8px",
+          padding: "0 4px",
+          gap: "4px",
+        }}
+        aria-haspopup="listbox"
+        aria-expanded={isOpen}
+        aria-label="Service type"
+        aria-invalid={!!error}
+      >
+        <div className="flex shrink-0 items-center justify-center" style={{ width: "40px", height: "40px" }}>
+          <SearchIcon size={24} color="#364153" />
+        </div>
+
+        <span
+          className="flex-1"
+          style={{
+            fontFamily: "Inter, sans-serif",
+            fontSize: "14px",
+            fontWeight: value ? 500 : 400,
+            lineHeight: "20px",
+            color: value ? "#364153" : "#4A5565",
+          }}
         >
-          {/* Leading icon */}
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <circle cx="11" cy="11" r="7" stroke="#364153" strokeWidth="2" />
-              <path d="M16 16l4.5 4.5" stroke="#364153" strokeWidth="2" strokeLinecap="round" />
-            </svg>
-          </div>
+          {value || "A service, a meeting, an offer"}
+        </span>
 
-          {/* Value or placeholder */}
-          <span
-            className={`flex-1 font-inter text-sm font-medium ${
-              value ? "text-text-dark" : "text-text-gray"
-            }`}
+        <div className="flex shrink-0 items-center justify-center" style={{ width: "40px", height: "40px" }}>
+          <svg
+            width="14"
+            height="10"
+            viewBox="0 0 14 10"
+            fill="none"
+            className={`transition-transform ${isOpen ? "rotate-180" : ""}`}
           >
-            {value || "A service, a meeting, an offer"}
-          </span>
+            <path d="M1 1l6 7 6-7" stroke="#4A5565" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </div>
+      </button>
 
-          {/* Trailing chevron */}
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center">
-            <ChevronDownIcon
-              size={20}
-              color="#4A5565"
-              className={`transition-transform ${isOpen ? "rotate-180" : ""}`}
-            />
-          </div>
-        </button>
-
-        {/* Dropdown list */}
-        {isOpen && (
-          <ul
-            className="absolute top-full left-0 z-30 mt-1 max-h-60 w-full overflow-auto rounded-lg bg-white py-1 shadow-lg ring-1 ring-black/10"
-            role="listbox"
-            aria-label="Service types"
-          >
-            {serviceTypes.map((type) => (
+      {isOpen && (
+        <ul
+          className="absolute top-full left-0 z-30 mt-1 w-full overflow-auto rounded-lg bg-white py-2 shadow-lg ring-1 ring-black/10"
+          role="listbox"
+          aria-label="Service types"
+          style={{ maxHeight: "340px" }}
+        >
+          {serviceTypes.map((type) => {
+            const IconComponent = serviceTypeIcons[type];
+            return (
               <li
                 key={type}
                 role="option"
@@ -98,26 +136,27 @@ export default function ServiceTypeDropdown({ value, onChange, error }: ServiceT
                 tabIndex={0}
                 onClick={() => handleSelect(type)}
                 onKeyDown={(e) => handleItemKeyDown(e, type)}
-                className={`cursor-pointer px-4 py-2.5 font-inter text-sm transition-colors hover:bg-primary-blue/5 ${
-                  value === type ? "bg-primary-blue/10 font-medium text-primary-blue" : "text-text-dark"
-                }`}
+                className="flex cursor-pointer items-center transition-colors hover:bg-blue-50"
+                style={{
+                  padding: "14px 20px",
+                  gap: "12px",
+                  color: value === type ? "#006CE4" : "#364153",
+                  fontWeight: value === type ? 500 : 400,
+                  backgroundColor: value === type ? "rgba(0, 108, 228, 0.1)" : undefined,
+                  fontFamily: "Inter, sans-serif",
+                  fontSize: "18px",
+                  lineHeight: "24px",
+                }}
               >
+                {IconComponent && <IconComponent size={24} color={value === type ? "#006CE4" : "#6B7280"} />}
                 {type}
               </li>
-            ))}
-          </ul>
-        )}
+            );
+          })}
+        </ul>
+      )}
 
-        {error && <p className="mt-1 pl-2 text-xs text-red-300">{error}</p>}
-      </div>
-
-      {/* Full popup image (alternative view) */}
-      <ImageOverlay
-        src="/images/popup.png"
-        alt="Service categories"
-        isOpen={isPopupOpen}
-        onClose={() => setIsPopupOpen(false)}
-      />
-    </>
+      {error && <p className="mt-1 pl-2 text-xs text-red-300">{error}</p>}
+    </div>
   );
 }

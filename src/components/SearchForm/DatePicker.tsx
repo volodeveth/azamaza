@@ -32,27 +32,34 @@ export default function DatePicker({ value, onChange, error }: DatePickerProps) 
       <button
         type="button"
         onClick={handleClick}
-        className={`relative flex h-[42px] w-full items-center gap-1 rounded-lg bg-input-bg px-1 text-left ${
-          error ? "ring-2 ring-red-400" : ""
-        }`}
+        className={`relative flex w-full items-center text-left ${error ? "ring-2 ring-red-400" : ""}`}
+        style={{
+          height: "42px",
+          backgroundColor: "#F8FAFC",
+          borderRadius: "8px",
+          padding: "0 4px",
+          gap: "4px",
+        }}
         aria-label="Date of service"
         aria-invalid={!!error}
       >
-        {/* Leading icon */}
-        <div className="flex h-10 w-10 shrink-0 items-center justify-center">
+        <div className="flex shrink-0 items-center justify-center" style={{ width: "40px", height: "40px" }}>
           <CalendarIcon size={24} color="#364153" />
         </div>
 
-        {/* Display text */}
         <span
-          className={`flex-1 font-inter text-base font-normal ${
-            value ? "text-text-dark" : "text-text-gray"
-          }`}
+          className="flex-1"
+          style={{
+            fontFamily: "Inter, sans-serif",
+            fontSize: "16px",
+            fontWeight: 400,
+            lineHeight: "24px",
+            color: value ? "#364153" : "#4A5565",
+          }}
         >
           {value ? formatDisplayDate(value) : "Date of use of the service"}
         </span>
 
-        {/* Hidden native date input */}
         <input
           ref={inputRef}
           type="date"

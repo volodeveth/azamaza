@@ -1,6 +1,6 @@
 "use client";
 
-import { PersonIcon, CloseIcon } from "@/components/ui/Icons";
+import { LocationIcon, CloseIcon } from "@/components/ui/Icons";
 
 interface DestinationInputProps {
   value: string;
@@ -12,37 +12,47 @@ export default function DestinationInput({ value, onChange, error }: Destination
   return (
     <div>
       <div
-        className={`flex h-[42px] items-center gap-1 rounded-lg bg-input-bg px-1 ${
-          error ? "ring-2 ring-red-400" : ""
-        }`}
+        className={`flex items-center ${error ? "ring-2 ring-red-400" : ""}`}
+        style={{
+          height: "42px",
+          backgroundColor: "#F8FAFC",
+          borderRadius: "8px",
+          padding: "0 4px",
+          gap: "4px",
+        }}
       >
-        {/* Leading icon */}
-        <div className="flex h-10 w-10 shrink-0 items-center justify-center">
-          <PersonIcon size={24} color="#364153" />
+        <div className="flex shrink-0 items-center justify-center" style={{ width: "40px", height: "40px" }}>
+          <LocationIcon size={24} color="#364153" />
         </div>
 
-        {/* Input */}
         <input
           type="text"
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder="Destination, city, address"
-          className="h-full flex-1 bg-transparent font-inter text-sm font-normal text-text-dark placeholder:text-text-gray outline-none"
+          className="h-full flex-1 bg-transparent outline-none"
+          style={{
+            fontFamily: "Inter, sans-serif",
+            fontSize: "14px",
+            fontWeight: 400,
+            lineHeight: "20px",
+            color: "#364153",
+          }}
           aria-label="Destination"
           aria-invalid={!!error}
         />
 
-        {/* Clear button */}
-        {value && (
+        <div className="flex shrink-0 items-center justify-center" style={{ width: "40px", height: "40px" }}>
           <button
             type="button"
-            onClick={() => onChange("")}
-            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full transition-colors hover:bg-black/5"
+            onClick={() => value && onChange("")}
+            className="flex items-center justify-center rounded-full transition-colors hover:bg-black/5"
+            style={{ width: "32px", height: "32px" }}
             aria-label="Clear destination"
           >
-            <CloseIcon size={18} color="#4A5565" />
+            <CloseIcon size={24} color="#4A5565" />
           </button>
-        )}
+        </div>
       </div>
       {error && <p className="mt-1 pl-2 text-xs text-red-300">{error}</p>}
     </div>

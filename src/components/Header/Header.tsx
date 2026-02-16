@@ -10,33 +10,57 @@ export default function Header() {
 
   return (
     <>
-      <header className="sticky top-0 z-40 w-full bg-primary-blue">
-        <div className="mx-auto flex h-20 max-w-[1280px] items-center justify-between px-4">
+      <header className="w-full" style={{ backgroundColor: "#006CE4", height: "80px" }}>
+        <div className="flex h-full items-center justify-between" style={{ padding: "0 16px" }}>
           {/* Logo */}
-          <div className="flex items-center gap-1">
+          <div className="flex items-center" style={{ gap: "4px" }}>
             <Image
               src="/images/logo.png"
               alt="Azamaza logo"
               width={26}
               height={24}
-              className="h-6 w-auto"
+              className="h-6 w-auto object-contain"
+              priority
             />
-            <span className="text-lg font-medium text-white" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
+            <span
+              style={{
+                fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
+                fontSize: "18px",
+                fontWeight: 500,
+                lineHeight: "120%",
+                color: "#FFFFFF",
+              }}
+            >
               Azamaza
             </span>
           </div>
 
           {/* Right side */}
-          <div className="flex items-center gap-4 md:gap-6">
+          <div className="flex items-center" style={{ gap: "16px" }}>
             {/* Become a member button */}
-            <button className="rounded-3xl bg-yellow-header px-4 py-1.5 text-xs tracking-tight text-gray-500 transition-colors hover:bg-yellow-400">
+            <button
+              style={{
+                backgroundColor: "#F1D246",
+                color: "#434447",
+                padding: "5px 16px",
+                borderRadius: "24px",
+                fontFamily: "Inter, sans-serif",
+                fontSize: "12px",
+                fontWeight: 400,
+                lineHeight: "103%",
+                letterSpacing: "-0.408px",
+                textAlign: "center" as const,
+                height: "32px",
+              }}
+              className="transition-colors hover:brightness-105"
+            >
               Become a member
             </button>
 
             {/* Avatar */}
-            <div className="relative h-8 w-8 overflow-hidden rounded-full">
+            <div className="relative shrink-0 overflow-hidden rounded-full" style={{ width: "32px", height: "32px" }}>
               <Image
-                src="/images/avatar.png"
+                src="/images/avatar.jpg"
                 alt="User avatar"
                 width={32}
                 height={32}
@@ -47,13 +71,25 @@ export default function Header() {
             {/* Burger menu with badge */}
             <button
               onClick={() => setIsMenuOpen(true)}
-              className="relative p-1 transition-opacity hover:opacity-80"
+              className="relative transition-opacity hover:opacity-80"
               aria-label="Open menu"
               aria-expanded={isMenuOpen}
             >
               <BurgerIcon size={24} color="#FFFFFF" />
               {/* Red notification badge */}
-              <span className="absolute -top-1 -right-1 flex h-[18px] w-[18px] items-center justify-center rounded-full bg-red-badge text-[10px] text-white">
+              <span
+                className="absolute flex items-center justify-center rounded-full font-onest text-white"
+                style={{
+                  backgroundColor: "#FB2C36",
+                  width: "18px",
+                  height: "18px",
+                  fontSize: "10px",
+                  lineHeight: "103%",
+                  letterSpacing: "-0.408px",
+                  top: "-5px",
+                  right: "-7px",
+                }}
+              >
                 3
               </span>
             </button>

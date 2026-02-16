@@ -55,11 +55,19 @@ export default function SearchForm() {
   };
 
   return (
-    <div className="px-4 pb-6">
+    <div style={{ padding: "24px 16px 24px 16px" }}>
       <form onSubmit={handleSubmit} noValidate>
-        <div className="flex flex-col gap-2 rounded-2xl bg-search-blue p-2">
+        <div
+          className="flex flex-col"
+          style={{
+            backgroundColor: "#155DFC",
+            borderRadius: "16px",
+            padding: "8px",
+            gap: "8px",
+          }}
+        >
           {/* Inputs */}
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col" style={{ gap: "8px" }}>
             <DestinationInput
               value={formData.destination}
               onChange={(val) => updateField("destination", val)}
@@ -81,7 +89,17 @@ export default function SearchForm() {
           <button
             type="submit"
             disabled={isLoading}
-            className="flex h-10 w-full items-center justify-center rounded-full bg-yellow font-inter text-sm font-semibold text-text-dark transition-all hover:brightness-105 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-70"
+            style={{
+              backgroundColor: "#FFDF20",
+              color: "#364153",
+              height: "40px",
+              borderRadius: "9999px",
+              fontFamily: "Inter, sans-serif",
+              fontSize: "14px",
+              fontWeight: 600,
+              lineHeight: "20px",
+            }}
+            className="flex w-full items-center justify-center transition-all hover:brightness-105 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-70"
           >
             {isLoading ? (
               <div className="flex items-center gap-2">

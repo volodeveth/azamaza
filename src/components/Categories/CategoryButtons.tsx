@@ -31,15 +31,29 @@ export default function CategoryButtons() {
 
   return (
     <>
-      <section className="px-4 py-3">
-        <div className="flex flex-wrap gap-2">
+      <section style={{ padding: "16px 16px 0 16px" }}>
+        <div className="flex flex-wrap" style={{ rowGap: "8px", columnGap: "5px" }}>
           {categories.map((category) => {
             const IconComponent = iconMap[category.icon];
             return (
               <a
                 key={category.id}
                 href={category.href}
-                className="inline-flex items-center gap-1 rounded-3xl border border-primary-blue px-4 py-1.5 font-onest text-base leading-[22px] tracking-tight text-primary-blue transition-colors hover:bg-primary-blue/5"
+                className="inline-flex items-center transition-colors hover:opacity-80"
+                style={{
+                  height: "42px",
+                  padding: "6px 16px",
+                  gap: "4px",
+                  borderRadius: "24px",
+                  border: "1px solid #006CE4",
+                  fontFamily: "var(--font-onest-var), 'Onest', sans-serif",
+                  fontSize: "16px",
+                  fontWeight: 400,
+                  lineHeight: "22px",
+                  letterSpacing: "-0.408px",
+                  textAlign: "center" as const,
+                  color: "#006CE4",
+                }}
               >
                 {IconComponent && <IconComponent size={20} color="#006CE4" />}
                 <span>{category.name}</span>
@@ -50,7 +64,20 @@ export default function CategoryButtons() {
           {/* "All" button - filled */}
           <button
             onClick={() => setIsCategoriesPageOpen(true)}
-            className="inline-flex items-center gap-1 rounded-3xl bg-primary-blue px-4 py-1.5 font-onest text-base leading-[22px] tracking-tight text-white transition-colors hover:bg-primary-blue/90"
+            className="inline-flex items-center text-white transition-colors hover:opacity-90"
+            style={{
+              height: "42px",
+              padding: "6px 16px",
+              gap: "4px",
+              borderRadius: "24px",
+              backgroundColor: "#006CE4",
+              fontFamily: "var(--font-onest-var), 'Onest', sans-serif",
+              fontSize: "16px",
+              fontWeight: 400,
+              lineHeight: "22px",
+              letterSpacing: "-0.408px",
+              textAlign: "center" as const,
+            }}
           >
             <GridIcon size={20} color="#FFFFFF" />
             <span>All</span>

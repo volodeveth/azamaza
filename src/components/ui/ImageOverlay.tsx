@@ -61,8 +61,10 @@ export default function ImageOverlay({
     >
       <div
         ref={contentRef}
-        className={`relative max-h-[90vh] overflow-auto overlay-scroll ${
-          position === "left" ? "animate-slide-in-left h-full" : "animate-fade-in"
+        className={`relative overflow-auto overlay-scroll ${
+          position === "left"
+            ? "animate-slide-in-left h-full w-[85vw] max-w-[390px]"
+            : "animate-fade-in max-h-[90vh]"
         }`}
       >
         <button
@@ -77,7 +79,7 @@ export default function ImageOverlay({
           alt={alt}
           width={390}
           height={800}
-          className="max-w-[90vw] h-auto object-contain rounded-lg"
+          className={position === "left" ? "w-full h-auto object-contain" : "max-w-[90vw] h-auto object-contain rounded-lg"}
           priority
         />
       </div>
